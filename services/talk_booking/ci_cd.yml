@@ -1,0 +1,12 @@
+service-talk-booking-code-quality:
+  stage: test
+  image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-python3.9-slim
+  before_script:
+    - cd services/talk_booking/
+    - poetry install
+  script:
+    - poetry run flake8 .
+    - poetry run black . --check
+    - poetry run isort . --check-only --profile black
+    - poetry run bandit .
+    - poetry run safety check
