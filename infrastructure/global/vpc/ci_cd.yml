@@ -17,6 +17,12 @@ vpc-validate:
   script:
     - gitlab-terraform init
     - gitlab-terraform validate
+  only:
+    refs:
+      - merge_requests
+      - master
+    changes:
+      - infrastructure/global/vpc/**/*
 
 vpc-plan:
   extends: .vpc-job
@@ -32,6 +38,12 @@ vpc-plan:
       - ${TF_ROOT}/plan.cache
     reports:
       terraform: ${TF_ROOT}/plan.json
+  only:
+    refs:
+      - merge_requests
+      - master
+    changes:
+      - infrastructure/global/vpc/**/*
 
 vpc-apply:
   extends: .vpc-job
@@ -45,3 +57,8 @@ vpc-apply:
   dependencies:
     - vpc-plan
   when: manual
+  only:
+    refs:
+      - master
+    changes:
+      - infrastructure/global/vpc/**/*
