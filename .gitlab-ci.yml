@@ -1,6 +1,9 @@
 stages:
   - docker
   - test
+  - validate
+  - plan
+  - apply
 
 variables:
   DOCKER_DRIVER: overlay2
@@ -22,6 +25,12 @@ build-python-ci-image:
     - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
     - docker build -t registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-python3.9-slim .
     - docker push registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-python3.9-slim
+  only:
+    changes:
+      - ci_cd/python/Dockerfile
+    refs:
+      - main
 
 include:
+  - local: /infrastructure/global/vpc/ci-cd.yml
   - local: /services/talk_booking/ci-cd.yml

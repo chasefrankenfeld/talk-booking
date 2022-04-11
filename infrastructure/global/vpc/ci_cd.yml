@@ -1,0 +1,47 @@
+.vpc-job:
+  image: registry.gitlab.com/gitlab-org/terraform-images/releases/0.14:v0.10.0
+  variables:
+    TF_ROOT: ${CI_PROJECT_DIR}/infrastructure/global/vpc
+    TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/vpc
+
+cache:
+  key: vpc
+  paths:
+    - ${CI_PROJECT_DIR}/infrastructure/global/vpc/.terraform
+
+vpc-validate:
+  extends: .vpc-job
+  stage: validate
+  before_script:
+    - cd ${TF_ROOT}
+  script:
+    - gitlab-terraform init
+    - gitlab-terraform validate
+
+vpc-plan:
+  extends: .vpc-job
+  stage: plan
+  before_script:
+    - cd ${TF_ROOT}
+  script:
+    - gitlab-terraform plan
+    - gitlab-terraform plan-json
+  artifacts:
+    name: plan
+    paths:
+      - ${TF_ROOT}/plan.cache
+    reports:
+      terraform: ${TF_ROOT}/plan.json
+
+vpc-apply:
+  extends: .vpc-job
+  stage: apply
+  before_script:
+    - cd ${TF_ROOT}
+  environment:
+    name: production
+  script:
+    - gitlab-terraform apply
+  dependencies:
+    - vpc-plan
+  when: manual
