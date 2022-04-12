@@ -1,0 +1,59 @@
+cache:
+  key: talk-booking-service-environment
+  paths:
+    - ${CI_PROJECT_DIR}/infrastructure/talk-booking-service/development/.terraform
+
+.talk-booking-service-validate:
+  image: registry.gitlab.com/gitlab-org/terraform-images/releases/0.14:v0.10.0
+  stage: validate
+  before_script:
+    - cd ${TF_ROOT}
+  script:
+    - gitlab-terraform init -var="vpc_state_username=gitlab-ci-token" -var="vpc_state_password=$CI_JOB_TOKEN"
+    - gitlab-terraform validate -var="vpc_state_username=gitlab-ci-token" -var="vpc_state_password=$CI_JOB_TOKEN"
+
+talk-booking-service-validate-development:
+  extends: .talk-booking-service-validate
+  variables:
+    TF_ROOT: ${CI_PROJECT_DIR}/infrastructure/talk-booking-service/development
+    TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/talk-booking-service-development
+
+.talk-booking-service-plan:
+  image: registry.gitlab.com/gitlab-org/terraform-images/releases/0.14:v0.10.0
+  stage: plan
+  before_script:
+    - cd ${TF_ROOT}
+  script:
+    - gitlab-terraform plan -var="vpc_state_username=gitlab-ci-token" -var="vpc_state_password=$CI_JOB_TOKEN"
+    - gitlab-terraform plan-json -var="vpc_state_username=gitlab-ci-token" -var="vpc_state_password=$CI_JOB_TOKEN"
+  artifacts:
+    name: plan
+    paths:
+      - ${TF_ROOT}/plan.cache
+    reports:
+      terraform: ${TF_ROOT}/plan.json
+
+talk-booking-service-plan-development:
+  extends: .talk-booking-service-plan
+  variables:
+    TF_ROOT: ${CI_PROJECT_DIR}/infrastructure/talk-booking-service/development
+    TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/talk-booking-service-development
+
+.talk-booking-service-apply:
+  image: registry.gitlab.com/gitlab-org/terraform-images/releases/0.14:v0.10.0
+  stage: apply
+  before_script:
+    - cd ${TF_ROOT}
+  script:
+    - gitlab-terraform apply
+  when: manual
+
+talk-booking-service-apply-development:
+  extends: .talk-booking-service-apply
+  environment:
+    name: development
+  variables:
+    TF_ROOT: ${CI_PROJECT_DIR}/infrastructure/talk-booking-service/development
+    TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/talk-booking-service-development
+  dependencies:
+    - talk-booking-service-plan-development
