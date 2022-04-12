@@ -77,3 +77,27 @@ talk-booking-service-apply-development:
     changes:
       - infrastructure/talk-booking-service/development/**/*
       - infrastructure/modules/talk-booking-service/**/*
+
+.service-talk-booking-docker-image:
+  image: registry.gitlab.com/<your-gitlab-username>/talk-booking:cicd-docker
+  stage: docker
+  services:
+    - docker:19.03.0-dind
+  before_script:
+    - cd services/talk_booking/
+    - poetry export --without-hashes --with-credentials -f requirements.txt > requirements.txt
+    - aws ecr get-login-password --region <region-of-your-application> | docker login --username AWS --password-stdin <aws-account-id>.dkr.ecr.<region-of-your-application>.amazonaws.com
+  script:
+    - docker build --pull -t "$DOCKER_IMAGE_TAG" .
+    - docker push "$DOCKER_IMAGE_TAG"
+
+service-talk-booking-docker-image-development:
+  extends: .service-talk-booking-docker-image
+  variables:
+    DOCKER_IMAGE_TAG: <your-ecr-url>:development-$CI_COMMIT_SHA
+  only:
+    refs:
+      - merge_requests
+      - master
+    changes:
+      - services/talk_booking/**/*
