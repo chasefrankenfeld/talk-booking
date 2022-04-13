@@ -79,7 +79,7 @@ talk-booking-service-apply-development:
       - infrastructure/modules/talk-booking-service/**/*
 
 .service-talk-booking-docker-image:
-  image: registry.gitlab.com/<your-gitlab-username>/talk-booking:cicd-docker
+  image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-docker
   stage: docker
   services:
     - docker:19.03.0-dind
