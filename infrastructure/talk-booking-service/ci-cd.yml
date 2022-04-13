@@ -20,7 +20,7 @@ talk-booking-service-validate-development:
   only:
     refs:
       - merge_requests
-      - master
+      - main
     changes:
       - infrastructure/talk-booking-service/development/**/*
       - infrastructure/modules/talk-booking-service/**/*
@@ -48,7 +48,7 @@ talk-booking-service-plan-development:
   only:
     refs:
       - merge_requests
-      - master
+      - main
     changes:
       - infrastructure/talk-booking-service/development/**/*
       - infrastructure/modules/talk-booking-service/**/*
@@ -73,7 +73,7 @@ talk-booking-service-apply-development:
     - talk-booking-service-plan-development
   only:
     refs:
-      - master
+      - main
     changes:
       - infrastructure/talk-booking-service/development/**/*
       - infrastructure/modules/talk-booking-service/**/*
@@ -98,6 +98,6 @@ service-talk-booking-docker-image-development:
   only:
     refs:
       - merge_requests
-      - master
+      - main
     changes:
       - services/talk_booking/**/*

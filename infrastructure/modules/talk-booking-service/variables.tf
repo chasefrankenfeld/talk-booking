@@ -7,7 +7,7 @@ variable "profile" {
 }
 
 variable "vpc_id" {
-  description = "ID od VPC"
+  description = "ID of VPC"
   type        = string
 }
 

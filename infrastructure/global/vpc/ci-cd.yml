@@ -41,7 +41,7 @@ vpc-plan:
   only:
     refs:
       - merge_requests
-      - master
+      - main
     changes:
       - infrastructure/global/vpc/**/*
 
@@ -59,6 +59,6 @@ vpc-apply:
   when: manual
   only:
     refs:
-      - master
+      - main
     changes:
       - infrastructure/global/vpc/**/*

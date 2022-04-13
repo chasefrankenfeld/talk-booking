@@ -9,8 +9,10 @@ provider "aws" {
 
 data "terraform_remote_state" "vpc" {
   backend = "http"
+
+  # the number in "projects/35320676/*" is the Gitlab ProjectID from the repo
   config = {
-    address  = "https://gitlab.com/api/v4/projects/<your-gitlab-project-id>/terraform/state/vpc"
+    address  = "https://gitlab.com/api/v4/projects/35320676/terraform/state/vpc"
     username = var.vpc_state_username
     password = var.vpc_state_password
   }
