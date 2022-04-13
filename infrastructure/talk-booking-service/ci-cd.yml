@@ -17,13 +17,6 @@ talk-booking-service-validate-development:
   variables:
     TF_ROOT: ${CI_PROJECT_DIR}/infrastructure/talk-booking-service/development
     TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/talk-booking-service-development
-  only:
-    refs:
-      - merge_requests
-      - main
-    changes:
-      - infrastructure/talk-booking-service/development/**/*
-      - infrastructure/modules/talk-booking-service/**/*
 
 .talk-booking-service-plan:
   image: registry.gitlab.com/gitlab-org/terraform-images/releases/0.14:v0.10.0
@@ -45,13 +38,6 @@ talk-booking-service-plan-development:
   variables:
     TF_ROOT: ${CI_PROJECT_DIR}/infrastructure/talk-booking-service/development
     TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/talk-booking-service-development
-  only:
-    refs:
-      - merge_requests
-      - main
-    changes:
-      - infrastructure/talk-booking-service/development/**/*
-      - infrastructure/modules/talk-booking-service/**/*
 
 .talk-booking-service-apply:
   image: registry.gitlab.com/gitlab-org/terraform-images/releases/0.14:v0.10.0
@@ -71,33 +57,3 @@ talk-booking-service-apply-development:
     TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/talk-booking-service-development
   dependencies:
     - talk-booking-service-plan-development
-  only:
-    refs:
-      - main
-    changes:
-      - infrastructure/talk-booking-service/development/**/*
-      - infrastructure/modules/talk-booking-service/**/*
-
-.service-talk-booking-docker-image:
-  image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-docker
-  stage: docker
-  services:
-    - docker:19.03.0-dind
-  before_script:
-    - cd services/talk_booking/
-    - poetry export --without-hashes --with-credentials -f requirements.txt > requirements.txt
-    - aws ecr get-login-password --region <region-of-your-application> | docker login --username AWS --password-stdin <aws-account-id>.dkr.ecr.<region-of-your-application>.amazonaws.com
-  script:
-    - docker build --pull -t "$DOCKER_IMAGE_TAG" .
-    - docker push "$DOCKER_IMAGE_TAG"
-
-service-talk-booking-docker-image-development:
-  extends: .service-talk-booking-docker-image
-  variables:
-    DOCKER_IMAGE_TAG: <your-ecr-url>:development-$CI_COMMIT_SHA
-  only:
-    refs:
-      - merge_requests
-      - main
-    changes:
-      - services/talk_booking/**/*
