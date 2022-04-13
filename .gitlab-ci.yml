@@ -29,7 +29,7 @@ build-python-ci-image:
     changes:
       - ci_cd/python/Dockerfile
     refs:
-      - master
+      - main
 
 build-docker-ci-image:
   image: docker:19.03

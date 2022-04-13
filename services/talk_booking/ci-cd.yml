@@ -13,7 +13,7 @@ service-talk-booking-code-quality:
   only:
     refs:
       - merge_requests
-      - master
+      - main
     changes:
       - services/talk_booking/**/*
 
@@ -34,6 +34,6 @@ service-talk-booking-tests:
   only:
     refs:
       - merge_requests
-      - master
+      - main
     changes:
       - services/talk_booking/**/*

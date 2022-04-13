@@ -20,7 +20,7 @@ vpc-validate:
   only:
     refs:
       - merge_requests
-      - master
+      - main
     changes:
       - infrastructure/global/vpc/**/*
 
