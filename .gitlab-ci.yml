@@ -44,6 +44,6 @@ build-docker-ci-image:
     - docker push registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-docker
 
 include:
-  - local: /infrastructure/global/vpc/ci-cd.yml
   - local: /services/talk_booking/ci-cd.yml
-  # - local: /infrastructure/talk-booking-service/ci-cd.yml
+  - local: /infrastructure/global/vpc/ci-cd.yml
+  - local: /infrastructure/talk-booking-service/ci-cd.yml
