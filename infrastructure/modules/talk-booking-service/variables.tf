@@ -2,10 +2,6 @@ variable "region" {
   description = "The AWS region to create resources in."
 }
 
-variable "profile" {
-  description = "The AWS account to be used"
-}
-
 variable "vpc_id" {
   description = "ID of VPC"
   type        = string
