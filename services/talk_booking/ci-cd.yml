@@ -58,6 +58,6 @@ service-talk-booking-docker-image-development:
   only:
     refs:
       - merge_requests
-      - master
+      - main
     changes:
       - services/talk_booking/**/*
