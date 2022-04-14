@@ -3,10 +3,8 @@ terraform {
 }
 
 provider "aws" {
-  region  = var.region
-  profile = var.profile
+  region = var.region
 }
-
 data "terraform_remote_state" "vpc" {
   backend = "http"
 
@@ -34,7 +32,6 @@ module "talk-booking-service" {
   autoscale_desired               = 1
   autoscale_max                   = 4
   region                          = var.region
-  profile                         = var.profile
   app_count                       = 1
   environment_name                = "talk-booking-dev"
   app_environment                 = "development"

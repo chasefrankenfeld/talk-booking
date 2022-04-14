@@ -3,11 +3,6 @@ variable "region" {
   default     = "eu-west-1"
 }
 
-variable "profile" {
-  description = "The AWS account to be used."
-  default     = "chase"
-}
-
 # networking
 
 variable "public_subnet_1_cidr" {
@@ -31,5 +26,5 @@ variable "private_subnet_2_cidr" {
 variable "availability_zones" {
   description = "Availability zones"
   type        = list(string)
-  default     = ["eu-west-1a", "eu-west-1b"]  // these need to match the regions selected
+  default     = ["eu-west-1a", "eu-west-1b"] // these need to match the regions selected
 }
