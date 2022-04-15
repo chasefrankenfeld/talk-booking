@@ -51,7 +51,25 @@ resource "aws_alb_listener" "ecs-alb-http-listener" {
   depends_on        = [aws_alb_target_group.default-target-group]
 
   default_action {
+    type = "redirect"
+    redirect {
+      port        = "443"
+      protocol    = "HTTPS"
+      status_code = "HTTP_301"
+    }
+  }
+}
+
+# Listener (redirects traffic from the load balancer to the target group)
+resource "aws_alb_listener" "ecs-alb-https-listener" {
+  load_balancer_arn = aws_lb.load_balancer.id
+  port              = "443"
+  protocol          = "HTTPS"
+  depends_on        = [aws_alb_target_group.default-target-group]
+
+  default_action {
     type             = "forward"
     target_group_arn = aws_alb_target_group.default-target-group.arn
   }
+  certificate_arn = aws_acm_certificate.app.arn
 }
