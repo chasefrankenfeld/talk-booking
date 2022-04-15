@@ -83,3 +83,12 @@ service-talk-booking-development:
       - main
     changes:
       - services/talk_booking/**/*
+
+service-talk-booking-e2e:
+  stage: e2e
+  image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-python3.9-slim
+  before_script:
+    - cd services/talk_booking/
+    - poetry install
+  script:
+    - poetry run python -m pytest tests/e2e

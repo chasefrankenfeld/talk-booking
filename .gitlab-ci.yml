@@ -5,6 +5,7 @@ stages:
   - plan
   - apply
   - deploy
+  - e2e
 
 variables:
   DOCKER_DRIVER: overlay2
