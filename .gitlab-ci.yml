@@ -4,6 +4,7 @@ stages:
   - validate
   - plan
   - apply
+  - deploy
 
 variables:
   DOCKER_DRIVER: overlay2
