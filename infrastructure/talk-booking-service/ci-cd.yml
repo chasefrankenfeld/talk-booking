@@ -73,7 +73,7 @@ talk-booking-service-apply-development:
     - talk-booking-service-plan-development
   only:
     refs:
-      - master
+      - main
     changes:
       - infrastructure/talk-booking-service/development/**/*
       - infrastructure/modules/talk-booking-service/**/*
