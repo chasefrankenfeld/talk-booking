@@ -12,6 +12,7 @@ cache:
     - gitlab-terraform init -var="vpc_state_username=gitlab-ci-token" -var="vpc_state_password=$CI_JOB_TOKEN"
     - gitlab-terraform validate -var="vpc_state_username=gitlab-ci-token" -var="vpc_state_password=$CI_JOB_TOKEN"
 
+# DEVELOPMENT
 talk-booking-service-validate-development:
   extends: .talk-booking-service-validate
   variables:
@@ -24,6 +25,13 @@ talk-booking-service-validate-development:
     changes:
       - infrastructure/talk-booking-service/development/**/*
       - infrastructure/modules/talk-booking-service/**/*
+
+# PRODUCTION
+talk-booking-service-validate-production:
+  extends: .talk-booking-service-validate
+  variables:
+    TF_ROOT: ${CI_PROJECT_DIR}/infrastructure/talk-booking-service/production
+    TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/talk-booking-service-production
 
 .talk-booking-service-plan:
   image: registry.gitlab.com/gitlab-org/terraform-images/releases/0.14:v0.10.0
@@ -40,6 +48,7 @@ talk-booking-service-validate-development:
     reports:
       terraform: ${TF_ROOT}/plan.json
 
+# DEVELOPMENT
 talk-booking-service-plan-development:
   extends: .talk-booking-service-plan
   variables:
@@ -53,6 +62,13 @@ talk-booking-service-plan-development:
       - infrastructure/talk-booking-service/development/**/*
       - infrastructure/modules/talk-booking-service/**/*
 
+# PRODUCTION
+talk-booking-service-plan-production:
+  extends: .talk-booking-service-plan
+  variables:
+    TF_ROOT: ${CI_PROJECT_DIR}/infrastructure/talk-booking-service/production
+    TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/talk-booking-service-production
+
 .talk-booking-service-apply:
   image: registry.gitlab.com/gitlab-org/terraform-images/releases/0.14:v0.10.0
   stage: apply
@@ -62,6 +78,7 @@ talk-booking-service-plan-development:
     - gitlab-terraform apply
   when: manual
 
+# DEVELOPMENT
 talk-booking-service-apply-development:
   extends: .talk-booking-service-apply
   environment:
@@ -77,3 +94,14 @@ talk-booking-service-apply-development:
     changes:
       - infrastructure/talk-booking-service/development/**/*
       - infrastructure/modules/talk-booking-service/**/*
+
+# PRODUCTION
+talk-booking-service-apply-production:
+  extends: .talk-booking-service-apply
+  environment:
+    name: production
+  variables:
+    TF_ROOT: ${CI_PROJECT_DIR}/infrastructure/talk-booking-service/production
+    TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/talk-booking-service-production
+  dependencies:
+    - talk-booking-service-plan-production
