@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+# fast api app
 app = FastAPI()
 
 
