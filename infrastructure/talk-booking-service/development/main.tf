@@ -37,4 +37,3 @@ module "talk-booking-service" {
   app_environment                 = "development"
   domain_zone_id                  = data.terraform_remote_state.vpc.outputs.domain_zone_id
   domain                          = "development.beerlibrary.co"
-
