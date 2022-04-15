@@ -76,3 +76,12 @@ variable "app_environment" {
   description = "Application environment"
   type        = string
 }
+
+variable "domain_zone_id" {
+  description = "Route 53 zone ID"
+  type        = string
+}
+variable "domain" {
+  description = "Domain for App"
+  type        = string
+}
