@@ -83,3 +83,4 @@ service-talk-booking-development:
       - main
     changes:
       - services/talk_booking/**/*
+    when: manual
