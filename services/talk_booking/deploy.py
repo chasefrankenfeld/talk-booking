@@ -33,7 +33,6 @@ def update_service(client, cluster, service, task_arn):
     )
 
 
-# Checks to see if the deployment is finished or not
 def wait_to_finish_deployment(client, cluster, service, timeout):
     sleep_seconds = 10
     timeout = int(timeout / sleep_seconds)
