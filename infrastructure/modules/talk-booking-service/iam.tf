@@ -96,3 +96,29 @@ resource "aws_iam_instance_profile" "ecs" {
   path = "/"
   role = aws_iam_role.ecs-host-role.name
 }
+
+resource "aws_iam_role_policy" "ecs-instance-role-policy" {
+  name   = "${var.environment_name}-ecs-instance-role-policy"
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ecs:*",
+        "ec2:*",
+        "elasticloadbalancing:*",
+        "ecr:*",
+        "cloudwatch:*",
+        "logs:*",
+        "rds:*",
+        "secretsmanager:*"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+  role   = aws_iam_role.ecs-host-role.id
+}
