@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from .requests import SubmitTalkRequest
+from .requests import SubmitTalkRequest, AcceptTalkRequest
 from .responses import TalkRequestDetails, TalkRequestList
 
 
@@ -47,3 +47,21 @@ def talk_requests():
                 }
             ]
         }
+
+
+@app.post("/talk-request/accept/", status_code=200, response_model=TalkRequestDetails)
+def accept_talk_request(accept_talk_request_body: AcceptTalkRequest):
+    return {
+        "id": accept_talk_request_body.id,
+        "event_time": "2021-10-03T10:30:00",
+        "address": {
+            "street": "Sunny street 42",
+            "city": "Sunny city 42000",
+            "state": "Sunny state",
+            "country": "Sunny country",
+        },
+        "topic": "FastAPI with Pydantic",
+        "status": "ACCEPTED",
+        "duration_in_minutes": 45,
+        "requester": "john@doe.com",
+    }
