@@ -16,5 +16,6 @@ class TalkRequestDetails(BaseModel):
     requester: EmailStr
     status: TalkRequestStatus
 
+
 class TalkRequestList(BaseModel):
     results: List[TalkRequestDetails]
