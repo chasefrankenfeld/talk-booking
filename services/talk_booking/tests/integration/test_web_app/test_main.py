@@ -101,3 +101,20 @@ def test_accept_talk_request(client):
     response_body = response.json()
     assert response_body["id"] == "unique_id"
     assert response_body["status"] == "ACCEPTED"
+
+
+def test_reject_talk_request(client):
+    """
+    GIVEN id of talk request
+    WHEN reject talk request endpoint is called
+    THEN request is accepted
+    """
+    response = client.post(
+        "/talk-request/reject/",
+        headers={'content-type': 'application/json'},
+        data=json.dumps({"id": "unique_id"}),
+    )
+    assert response.status_code == 200
+    response_body = response.json()
+    assert response_body["id"] == "unique_id"
+    assert response_body["status"] == "REJECTED"

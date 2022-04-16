@@ -15,3 +15,7 @@ class SubmitTalkRequest(BaseModel):
 
 class AcceptTalkRequest(BaseModel):
     id: str
+
+
+class RejectTalkRequest(BaseModel):
+    id: str
