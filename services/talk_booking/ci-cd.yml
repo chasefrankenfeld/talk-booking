@@ -94,12 +94,25 @@ service-talk-booking-e2e:
     - poetry install
   script:
     - poetry run python -m pytest tests/e2e
+  only:
+    refs:
+      - merge_requests
+      - main
+    changes:
+      - services/talk_booking/**/*
 
 # PRODUCTION DOCKER IMAGE
 service-talk-booking-docker-image-production:
   extends: .service-talk-booking-docker-image
   variables:
     DOCKER_IMAGE_TAG: 094312529058.dkr.ecr.eu-west-1.amazonaws.com/talk-booking-prod:production-$CI_COMMIT_TAG
+  except:
+    - branches
+  only:
+    refs:
+      - /^talk-booking-[0-9]+(?:.[0-9]+)+$/
+    changes:
+      - services/talk_booking/**/*
 
 # PRODUCTION DEPLOY
 service-talk-booking-production:
@@ -108,3 +121,10 @@ service-talk-booking-production:
     ENVIRONMENT_NAME: talk-booking-prod
     APP_ENVIRONMENT_NAME: production
     DOCKER_IMAGE_TAG: 094312529058.dkr.ecr.eu-west-1.amazonaws.com/talk-booking-prod:production-$CI_COMMIT_TAG
+  except:
+    - branches
+  only:
+    refs:
+      - /^talk-booking-[0-9]+(?:.[0-9]+)+$/
+    changes:
+      - services/talk_booking/**/*

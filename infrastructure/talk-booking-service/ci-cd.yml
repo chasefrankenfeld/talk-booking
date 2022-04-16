@@ -33,6 +33,12 @@ talk-booking-service-validate-production:
   variables:
     TF_ROOT: ${CI_PROJECT_DIR}/infrastructure/talk-booking-service/production
     TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/talk-booking-service-production
+  only:
+    refs:
+      - main
+    changes:
+      - infrastructure/talk-booking-service/production/**/*
+      - infrastructure/modules/talk-booking-service/**/*
 
 .talk-booking-service-plan:
   image: registry.gitlab.com/gitlab-org/terraform-images/releases/0.14:v0.10.0
@@ -69,6 +75,12 @@ talk-booking-service-plan-production:
   variables:
     TF_ROOT: ${CI_PROJECT_DIR}/infrastructure/talk-booking-service/production
     TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/talk-booking-service-production
+  only:
+    refs:
+      - main
+    changes:
+      - infrastructure/talk-booking-service/production/**/*
+      - infrastructure/modules/talk-booking-service/**/*
 
 .talk-booking-service-apply:
   image: registry.gitlab.com/gitlab-org/terraform-images/releases/0.14:v0.10.0
@@ -106,3 +118,9 @@ talk-booking-service-apply-production:
     TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/talk-booking-service-production
   dependencies:
     - talk-booking-service-plan-production
+  only:
+    refs:
+      - main
+    changes:
+      - infrastructure/talk-booking-service/production/**/*
+      - infrastructure/modules/talk-booking-service/**/*
