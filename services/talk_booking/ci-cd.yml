@@ -71,6 +71,7 @@ service-talk-booking-docker-image-development:
   script:
     - python deploy.py --cluster_name $ENVIRONMENT_NAME --service_name $ENVIRONMENT_NAME --new_image_uri $DOCKER_IMAGE_TAG
 
+# DEVELOPMENT DEPLOY
 service-talk-booking-development:
   extends: .service-talk-booking-deploy
   variables:
@@ -84,6 +85,7 @@ service-talk-booking-development:
     changes:
       - services/talk_booking/**/*
 
+# TEST HTTPS ENDPOINT
 service-talk-booking-e2e:
   stage: e2e
   image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-python3.9-slim
@@ -92,3 +94,17 @@ service-talk-booking-e2e:
     - poetry install
   script:
     - poetry run python -m pytest tests/e2e
+
+# PRODUCTION DOCKER IMAGE
+service-talk-booking-docker-image-production:
+  extends: .service-talk-booking-docker-image
+  variables:
+    DOCKER_IMAGE_TAG: 094312529058.dkr.ecr.eu-west-1.amazonaws.com/talk-booking-prod:production-$CI_COMMIT_TAG
+
+# PRODUCTION DEPLOY
+service-talk-booking-production:
+  extends: .service-talk-booking-deploy
+  variables:
+    ENVIRONMENT_NAME: talk-booking-prod
+    APP_ENVIRONMENT_NAME: production
+    DOCKER_IMAGE_TAG: 094312529058.dkr.ecr.eu-west-1.amazonaws.com/talk-booking-prod:production-$CI_COMMIT_TAG
