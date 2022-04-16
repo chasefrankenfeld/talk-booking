@@ -73,3 +73,4 @@ resource "aws_alb_listener" "ecs-alb-https-listener" {
   }
   certificate_arn = aws_acm_certificate.app.arn
 }
+
