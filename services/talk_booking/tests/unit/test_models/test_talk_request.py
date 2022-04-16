@@ -37,4 +37,9 @@ def test_talk_request_attributes():
     assert talk_request.duration_in_minutes == 45
     assert talk_request.topic == "Python type checking"
     assert talk_request.requester == "john@doe.com"
+
     assert talk_request.status == "PENDING"
+    assert talk_request.is_rejected is False
+
+    talk_request.status = 'REJECTED'
+    assert talk_request.is_rejected is True
