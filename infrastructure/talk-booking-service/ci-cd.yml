@@ -2,6 +2,7 @@ cache:
   key: talk-booking-service-environment
   paths:
     - ${CI_PROJECT_DIR}/infrastructure/talk-booking-service/development/.terraform
+    - ${CI_PROJECT_DIR}/infrastructure/talk-booking-service/production/.terraform
 
 .talk-booking-service-validate:
   image: registry.gitlab.com/gitlab-org/terraform-images/releases/0.14:v0.10.0
