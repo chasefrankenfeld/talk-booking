@@ -8,7 +8,6 @@ authors = ["Chase Frankenfeld <chasefrankenfeld@gmail.com>"]
 python = "^3.9"
 fastapi = "^0.75.1"
 uvicorn = "^0.17.6"
-pydantic = {extras = ["email"], version = "^1.9.0"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.1"
