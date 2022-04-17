@@ -36,7 +36,7 @@ resource "aws_db_instance" "talk_booking" {
   password                = random_password.db_password.result
   port                    = "5432"
   engine                  = "postgres"
-  engine_version          = "12.5"
+  engine_version          = "14"
   instance_class          = "db.t3.micro"
   allocated_storage       = "20"
   storage_encrypted       = false

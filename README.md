@@ -4,16 +4,19 @@ CICD using FastAPI, Docker, Terraform, Gitlab pipelines, and AWS (EC2 & RDS)
 
 ## Installation
 
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install foobar.
+Use the package manager [poetry](https://python-poetry.org/) to install foobar.
 
 ```bash
-pip install foobar
+cd services/talk_booking/
+poetry intstall
 ```
 
-## Usage
+## Pipeline
 
-```python
-import foobar
+This runs on the gitlab pipelines, and runs devops through terraform
+
+```
+
 
 # returns 'words'
 foobar.pluralize('word')
