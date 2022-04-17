@@ -25,7 +25,6 @@ def create_new_task_definition(client, current_definition, new_image):
     )["taskDefinition"]["taskDefinitionArn"]
 
 
-# new
 def run_migrations(client, cluster, task_arn):
     response = client.run_task(
         cluster=cluster,
@@ -99,7 +98,6 @@ if __name__ == "__main__":
         ecs_client, task_definition, new_image_uri
     )
 
-    # new
     run_migrations(ecs_client, cluster_name, new_task_arn)
 
     update_service(
