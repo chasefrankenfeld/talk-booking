@@ -1,16 +1,7 @@
 import uuid
 
-import pytest
-from starlette.testclient import TestClient
-
 from database import talk_request_db
 from models import Address, TalkRequest
-from web_app.main import app
-
-
-@pytest.fixture
-def client():
-    return TestClient(app)
 
 
 def test_health_check(client):

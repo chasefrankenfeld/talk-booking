@@ -1,9 +1,13 @@
+from typing import Generator
+
 import psycopg2
 import pytest
+from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 from web_app.config import load_config
+from web_app.main import app
 from web_app.migrations import downgrade_migrations, upgrade_migrations
 
 
@@ -30,3 +34,9 @@ def database_session():
     db.close()
     downgrade_migrations(dsn)
     engine.dispose()
+
+
+@pytest.fixture(scope="module")
+def client() -> Generator:
+    with TestClient(app) as c:
+        yield c
