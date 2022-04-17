@@ -25,6 +25,23 @@ def create_new_task_definition(client, current_definition, new_image):
     )["taskDefinition"]["taskDefinitionArn"]
 
 
+# new
+def run_migrations(client, cluster, task_arn):
+    response = client.run_task(
+        cluster=cluster,
+        taskDefinition=task_arn,
+        overrides={
+            "containerOverrides": [
+                {
+                    "name": "talk-booking-app",
+                    "command": "python migrations.py".split(),
+                }
+            ],
+        },
+    )
+    print(response)
+
+
 def update_service(client, cluster, service, task_arn):
     client.update_service(
         cluster=cluster,
@@ -81,6 +98,9 @@ if __name__ == "__main__":
     new_task_arn = create_new_task_definition(
         ecs_client, task_definition, new_image_uri
     )
+
+    # new
+    run_migrations(ecs_client, cluster_name, new_task_arn)
 
     update_service(
         ecs_client,

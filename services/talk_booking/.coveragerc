@@ -1,2 +1,2 @@
 [run]
-omit = .venv/**,deploy.py,tests/e2e/*
+omit = .venv/**,deploy.py,tests/e2e/*,alembic/**

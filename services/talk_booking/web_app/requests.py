@@ -1,6 +1,6 @@
 import datetime
 
-from pydantic import BaseModel, PositiveInt, EmailStr
+from pydantic import BaseModel, EmailStr, PositiveInt
 
 from models import Address
 
