@@ -1,15 +1,12 @@
-import datetime
 import json
 import uuid
 
 import pytest
 from starlette.testclient import TestClient
 
-from web_app.main import app
-
 from database import talk_request_db
-from models.address import Address
-from models.talk_request import TalkRequest
+from models import Address, TalkRequest
+from web_app.main import app
 
 
 @pytest.fixture
@@ -108,7 +105,6 @@ def test_list_requests(client, database_session):
     assert talk_requests[0]["requester"] == "john@doe.com"
 
 
-
 def test_accept_talk_request(client, database_session):  # new
     """
     GIVEN id of talk request
@@ -139,7 +135,6 @@ def test_accept_talk_request(client, database_session):  # new
     response_body = response.json()
     assert response_body["id"] == talk_request.id
     assert response_body["status"] == "ACCEPTED"
-
 
 
 def test_reject_talk_request(client):

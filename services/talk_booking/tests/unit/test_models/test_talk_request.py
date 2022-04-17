@@ -1,5 +1,7 @@
 import datetime
+import uuid
 
+from database import talk_request_db
 from models import Address, TalkRequest
 
 

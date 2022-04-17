@@ -1,9 +1,7 @@
 import os
+from typing import Optional
 
 import boto3
-
-from typing import Any, Dict, List, Optional, Union
-
 
 
 class ProductionConfig:
@@ -42,7 +40,7 @@ class TestConfig(ProductionConfig):
 
 class LocalTestConfig(ProductionConfig):
     DEBUG: bool = True
-    APP_ENVIRONMENT: str= "local"
+    APP_ENVIRONMENT: str = "local"
     _SQLALCHEMY_DATABASE_URI: Optional[str] = None
 
     @property

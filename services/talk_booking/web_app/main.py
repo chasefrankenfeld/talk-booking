@@ -1,12 +1,11 @@
-import pathlib
 import uuid
 
 from fastapi import Depends, FastAPI
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from models.talk_request import TalkRequest
 from database import talk_request_db
+from models.talk_request import TalkRequest
 
 from .config import load_config
 from .requests import AcceptTalkRequest, RejectTalkRequest, SubmitTalkRequest
@@ -50,7 +49,6 @@ def request_talk(
     return talk_request
 
 
-
 @app.get("/talk-requests/", status_code=200, response_model=TalkRequestList)
 def talk_requests(db_session=Depends(get_db_session)):
     return {
@@ -58,7 +56,6 @@ def talk_requests(db_session=Depends(get_db_session)):
             talk_request.dict() for talk_request in talk_request_db.list_all(db_session)
         ]
     }
-
 
 
 @app.post("/talk-request/accept/", status_code=200, response_model=TalkRequestDetails)
@@ -70,7 +67,6 @@ def accept_talk_request(
     talk_request = talk_request_db.save(db_session, talk_request)
 
     return talk_request
-
 
 
 @app.post("/talk-request/reject/", status_code=200, response_model=TalkRequestDetails)
