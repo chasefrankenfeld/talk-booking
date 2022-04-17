@@ -1,0 +1,56 @@
+lib-auto-reject-talk-quality:
+  stage: test
+  image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-python3.8-slim
+  before_script:
+    - cd libraries/auto_reject_talk/
+    - poetry install
+  script:
+    - poetry run flake8 .
+    - poetry run black . --check
+    - poetry run isort . --check-only --profile black
+    - poetry run bandit .
+    - poetry run safety check
+  only:
+    refs:
+      - merge_requests
+      - master
+    changes:
+      - libraries/auto_reject_talk/**/*
+
+lib-auto-reject-talk-tests:
+  stage: test
+  image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-python3.8-slim
+  before_script:
+    - cd libraries/auto_reject_talk/
+    - poetry install
+  script:
+    - poetry run python -m pytest --junitxml=report.xml --cov=./ tests
+  artifacts:
+    when: always
+    reports:
+      junit: libraries/auto_reject_talk/report.xml
+  only:
+    refs:
+      - merge_requests
+      - master
+    changes:
+      - libraries/auto_reject_talk/**/*
+
+lib-auto-reject-talk-publish:
+  stage: deploy
+  image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-python3.8-slim
+  variables:
+    REPO_URL: https://gitlab.com/api/v4/projects/35320676/packages/pypi
+  before_script:
+    - cd libraries/auto_reject_talk/
+    - poetry install
+  script:
+    - poetry build
+    - poetry config repositories.talk_booking $REPO_URL
+    - poetry publish --repository talk_booking --username gitlab-ci-token --password $CI_JOB_TOKEN
+  only:
+    changes:
+      - libraries/auto_reject_talk/**/*
+    refs:
+      - /^auto-reject-talk-[0-9]+(?:.[0-9]+)+$/
+      - /^auto-reject-talk-rc[0-9]+(?:.[0-9]+)+$/

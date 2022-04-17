@@ -62,7 +62,6 @@ def request_talk(
         requester=submit_talk_request.requester,
     )
     talk_request = talk_request_db.save(db_session, talk_request)
-    print(talk_request)
     return talk_request
 
 
