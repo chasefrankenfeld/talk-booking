@@ -5,6 +5,11 @@
 # pull official base image
 FROM python:3.9-slim-buster as builder
 
+# install system dependencies
+RUN apt-get update \
+  && apt-get -y install gcc postgresql \
+  && apt-get clean
+
 # set work directory
 WORKDIR /usr/src/app
 
@@ -42,6 +47,11 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 ENV ENVIRONMENT prod
 ENV TESTING 0
+
+# install system dependencies
+RUN apt-get update \
+  && apt-get -y install gcc postgresql \
+  && apt-get clean
 
 # install dependencies
 COPY --from=builder /usr/src/app/wheels /wheels

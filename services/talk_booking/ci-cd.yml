@@ -20,6 +20,13 @@ service-talk-booking-code-quality:
 service-talk-booking-tests:
   stage: test
   image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-python3.9-slim
+  services:
+    - postgres:alpine
+  variables:
+    POSTGRES_DB: talkbookingtest
+    POSTGRES_USER: app
+    POSTGRES_PASSWORD: talkbooking
+    APP_ENVIRONMENT: test
   before_script:
     - cd services/talk_booking/
     - poetry install
