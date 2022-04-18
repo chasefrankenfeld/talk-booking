@@ -25,28 +25,29 @@ def create_new_task_definition(client, current_definition, new_image):
     )["taskDefinition"]["taskDefinitionArn"]
 
 
-# def run_migrations(client, cluster, task_arn):
-#     response = client.run_task(
-#         cluster=cluster,
-#         taskDefinition=task_arn,
-#         overrides={
-#             "containerOverrides": [
-#                 {
-#                     "name": "talk-booking-app",
-#                     "command": "python migrations.py".split(),
-#                 }
-#             ],
-#         },
-#     )
-#     print(response)
+def run_migrations(client, cluster, task_arn):
+    response = client.run_task(
+        cluster=cluster,
+        taskDefinition=task_arn,
+        overrides={
+            "containerOverrides": [
+                {
+                    "name": "talk-booking-app",
+                    "command": "python migrations.py".split(),
+                }
+            ],
+        },
+    )
+    print(response)
 
 
 def update_service(client, cluster, service, task_arn):
-    client.update_service(
+    response = client.update_service(
         cluster=cluster,
         service=service,
         taskDefinition=task_arn,
     )
+    print(response)
 
 
 def wait_to_finish_deployment(client, cluster, service, timeout, task_definition_arn):
@@ -110,7 +111,7 @@ if __name__ == "__main__":
     )
     print("NEW TASK : ", new_task_arn)
 
-    # run_migrations(ecs_client, cluster_name, new_task_arn)
+    run_migrations(ecs_client, cluster_name, new_task_arn)
 
     update_service(
         ecs_client,
