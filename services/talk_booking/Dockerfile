@@ -59,7 +59,7 @@ COPY --from=builder /usr/src/app/requirements.txt .
 RUN pip install --upgrade pip
 RUN pip install --no-cache /wheels/*
 RUN pip install "gunicorn==20.1.0"
-RUN pip install "uvicorn[standard]==0.11.3"
+RUN pip install "uvicorn==0.17.6"
 
 # copy project
 COPY . $APP_HOME
