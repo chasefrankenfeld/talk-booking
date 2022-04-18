@@ -4,7 +4,7 @@ data "aws_ami" "ecs-ami" {
 
   filter {
     name   = "name"
-    values = ["amzn2-ami-ecs-hvm-2.0.20210121-*"]
+    values = ["amzn2-ami-ecs-hvm-2.0.20220328-*"]
   }
   filter {
     name   = "architecture"

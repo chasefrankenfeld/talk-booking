@@ -17,9 +17,9 @@ cache:
     - ${CI_PROJECT_DIR}/services/talk_booking/.venv/
 
 build-python-ci-image:
-  image: docker:19.03.0
+  image: docker:20.10.14
   services:
-    - docker:19.03.0-dind
+    - docker:20.10.14-dind
   stage: docker
   before_script:
     - cd ci_cd/python/
@@ -34,9 +34,9 @@ build-python-ci-image:
       - main
 
 build-docker-ci-image:
-  image: docker:19.03
+  image: docker:20.10
   services:
-    - docker:19.03-dind
+    - docker:20.10-dind
   stage: docker
   before_script:
     - cd ci_cd/docker/
