@@ -1,9 +1,10 @@
 stages:
-  - docker
-  - test
+  - destroy
   - validate
   - plan
   - apply
+  - test
+  - docker
   - deploy
   - e2e
 

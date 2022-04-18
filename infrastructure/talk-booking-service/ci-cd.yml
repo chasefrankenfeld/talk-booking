@@ -124,3 +124,39 @@ talk-booking-service-apply-production:
     changes:
       - infrastructure/talk-booking-service/production/**/*
       - infrastructure/modules/talk-booking-service/**/*
+
+# DESTROY DEVELOPMENT
+talk-booking-service-destroy-development:
+  image: registry.gitlab.com/gitlab-org/terraform-images/releases/0.14:v0.10.0
+  stage: destroy
+  variables:
+    TF_ROOT: ${CI_PROJECT_DIR}/infrastructure/talk-booking-service/development
+    TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/talk-booking-service-development
+  before_script:
+    - cd ${TF_ROOT}
+  environment:
+    name: development
+  script:
+    - gitlab-terraform destroy
+  when: manual
+  only:
+    refs:
+      - master
+
+# DESTROY PRODUCTION
+talk-booking-service-destroy-production:
+  image: registry.gitlab.com/gitlab-org/terraform-images/releases/0.14:v0.10.0
+  stage: destroy
+  variables:
+    TF_ROOT: ${CI_PROJECT_DIR}/infrastructure/talk-booking-service/production
+    TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/talk-booking-service-production
+  before_script:
+    - cd ${TF_ROOT}
+  environment:
+    name: production
+  script:
+    - gitlab-terraform destroy
+  when: manual
+  only:
+    refs:
+      - master

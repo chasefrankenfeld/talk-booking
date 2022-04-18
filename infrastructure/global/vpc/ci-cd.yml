@@ -62,3 +62,17 @@ vpc-apply:
       - main
     changes:
       - infrastructure/global/vpc/**/*
+
+vpc-destroy:
+  extends: .vpc-job
+  stage: destroy
+  before_script:
+    - cd ${TF_ROOT}
+  environment:
+    name: production
+  script:
+    - gitlab-terraform destroy
+  when: manual
+  only:
+    refs:
+      - master

@@ -49,7 +49,7 @@ def update_service(client, cluster, service, task_arn):
     )
 
 
-def wait_to_finish_deployment(client, cluster, service, timeout):
+def wait_to_finish_deployment(client, cluster, service, timeout, task_definition_arn):
     sleep_seconds = 10
     timeout = int(timeout / sleep_seconds)
     cnt = 0
@@ -57,13 +57,19 @@ def wait_to_finish_deployment(client, cluster, service, timeout):
 
     while cnt < timeout:
         response = client.describe_services(cluster=cluster, services=[service])
-        print(response)
         deployment = next(
             depl
             for depl in response["services"][0]["deployments"]
             if depl["status"] == "PRIMARY"
         )
-        if deployment["runningCount"] == deployment["desiredCount"]:
+        new_deployment_created = int(task_definition_arn.split(":")[-1]) < int(
+            response["services"][0]["taskDefinition"].split(":")[-1]
+        )
+
+        if (
+            deployment["runningCount"] == deployment["desiredCount"]
+            or new_deployment_created
+        ):
             deployment_finished = True
             break
         print(
@@ -111,6 +117,7 @@ if __name__ == "__main__":
         cluster=cluster_name,
         service=service_name,
         timeout=DEPLOYMENT_TIMEOUT,
+        task_definition_arn=new_task_arn,
     )
 
     if not finished:
