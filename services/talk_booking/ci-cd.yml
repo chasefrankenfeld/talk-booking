@@ -49,7 +49,7 @@ service-talk-booking-tests:
   image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-docker
   stage: docker
   services:
-    - docker:19.03.0-dind
+    - docker:20.10.14-dind
   before_script:
     - cd services/talk_booking/
     - poetry export --without-hashes --with-credentials -f requirements.txt > requirements.txt
