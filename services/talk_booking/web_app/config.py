@@ -1,5 +1,4 @@
 import base64
-import json
 import os
 from typing import Optional
 
@@ -83,6 +82,7 @@ def get_secret(env: str):
     # Create a Secrets Manager client
     session = boto3.session.Session()
     client = session.client(service_name="secretsmanager", region_name=region_name)
+    secret = None
 
     # In this sample we only handle the specific exceptions for the 'GetSecretValue' API.
     # See https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
@@ -116,7 +116,9 @@ def get_secret(env: str):
         # Depending on whether the secret is a string or binary, one of these fields will be populated.
         if "SecretString" in get_secret_value_response:
             secret = get_secret_value_response["SecretString"]
+            print("SECRET STRING exists")
         else:
+            print("IN DECODE SECTION")
             secret = base64.b64decode(get_secret_value_response["SecretBinary"])
 
     print("SECRET: ", secret)
