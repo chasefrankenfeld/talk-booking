@@ -16,7 +16,6 @@ class ProductionConfig:
     def SQLALCHEMY_DATABASE_URI(self) -> str:
         if self._SQLALCHEMY_DATABASE_URI is None:
             secret = get_secret(self.APP_ENVIRONMENT)
-            print("SECRET in prod cofig: ", secret)
             self._SQLALCHEMY_DATABASE_URI = secret
 
         return self._SQLALCHEMY_DATABASE_URI
@@ -116,11 +115,8 @@ def get_secret(env: str):
         # Depending on whether the secret is a string or binary, one of these fields will be populated.
         if "SecretString" in get_secret_value_response:
             secret = get_secret_value_response["SecretString"]
-            print("SECRET STRING exists")
         else:
-            print("IN DECODE SECTION")
             secret = base64.b64decode(get_secret_value_response["SecretBinary"])
-
-    print("SECRET: ", secret)
+            print("secret is binary")
 
     return secret

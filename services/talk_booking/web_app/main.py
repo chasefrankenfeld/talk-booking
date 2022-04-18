@@ -1,5 +1,6 @@
 import pathlib
 import uuid
+from typing import Generator
 
 from fastapi import Depends, FastAPI, Response
 from sqlalchemy import create_engine
@@ -19,7 +20,7 @@ app = FastAPI()
 app_config = load_config()
 
 
-def get_db_session():
+def get_db_session() -> Generator:
     engine = create_engine(app_config.SQLALCHEMY_DATABASE_URI, echo=False)
     db = sessionmaker(bind=engine)()
 
