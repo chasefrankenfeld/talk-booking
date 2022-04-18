@@ -25,7 +25,6 @@ def database_session():
     cur.execute(f"DROP DATABASE IF EXISTS {database_name};")
     cur.execute(f"CREATE DATABASE {database_name};")
 
-    app_config = load_config()
     dsn = app_config.SQLALCHEMY_DATABASE_URI
     engine = create_engine(dsn, echo=False)
     db = sessionmaker(bind=engine)()
