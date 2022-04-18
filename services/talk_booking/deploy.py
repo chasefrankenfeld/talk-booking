@@ -91,7 +91,6 @@ if __name__ == "__main__":
     parser.add_argument("--service_name", help="Service name")
     parser.add_argument("--new_image_uri", help="URI of new Docker image")
 
-
     args = parser.parse_args()
     print("ARGUMENTs:", args)
     cluster_name = args.cluster_name
