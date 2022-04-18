@@ -123,4 +123,3 @@ def get_secret(env: str):
             secret = base64.b64decode(get_secret_value_response['SecretBinary'])
 
     return json.loads(secret)
-
