@@ -1,11 +1,11 @@
 stages:
   - docker
-  # - test
-  # - validate
-  # - plan
-  # - apply
-  # - deploy
-  # - e2e
+  - test
+  - validate
+  - plan
+  - apply
+  - deploy
+  - e2e
 
 variables:
   DOCKER_DRIVER: overlay2
@@ -49,8 +49,9 @@ build-docker-ci-image:
       - ci_cd/docker/Dockerfile
     refs:
       - main
-# include:
-#   - local: /services/talk_booking/ci-cd.yml
-#   - local: /infrastructure/global/vpc/ci-cd.yml
-#   - local: /infrastructure/talk-booking-service/ci-cd.yml
-#   - local: /libraries/auto_reject_talk/ci-cd.yml
+
+include:
+  - local: /services/talk_booking/ci-cd.yml
+  - local: /infrastructure/global/vpc/ci-cd.yml
+  - local: /infrastructure/talk-booking-service/ci-cd.yml
+  - local: /libraries/auto_reject_talk/ci-cd.yml
