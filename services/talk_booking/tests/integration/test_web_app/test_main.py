@@ -75,9 +75,7 @@ def test_list_requests(client, database_session):
     talk_request_db.save(database_session, talk_request)
 
     # need to change this to getting the item with the same ID
-    response = client.get(
-        "/talk-requests/",
-    )
+    response = client.get("/talk-requests/",)
     assert response.status_code == 200
 
     response_body = response.json()
@@ -119,10 +117,7 @@ def test_accept_talk_request(client, database_session):
     )
     talk_request_db.save(database_session, talk_request)
 
-    response = client.post(
-        "/talk-request/accept/",
-        json={"id": talk_request.id},
-    )
+    response = client.post("/talk-request/accept/", json={"id": talk_request.id},)
     assert response.status_code == 200
     response_body = response.json()
     assert response_body["id"] == talk_request.id
@@ -150,10 +145,7 @@ def test_reject_talk_request(client, database_session):
         status="PENDING",
     )
     talk_request_db.save(database_session, talk_request)
-    response = client.post(
-        "/talk-request/reject/",
-        json={"id": talk_request.id},
-    )
+    response = client.post("/talk-request/reject/", json={"id": talk_request.id},)
     assert response.status_code == 200
     response_body = response.json()
     assert response_body["id"] == talk_request.id

@@ -31,9 +31,7 @@ def request_talk(api_url):
 
 
 def find_talk_request_in_list(api_url, talk_request):
-    response = requests.get(
-        f"{api_url}/talk-requests/",
-    )
+    response = requests.get(f"{api_url}/talk-requests/",)
     assert (
         talk_request in response.json()["results"]
     ), "Talk request not found in the list."
