@@ -4,11 +4,11 @@ from typing import Generator
 
 from fastapi import Depends, FastAPI, Response
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 
 from alembic import config, script
 from alembic.runtime import migration
 from database import talk_request_db
+from database.session import SessionLocal
 from models import TalkRequest
 
 from .config import load_config
@@ -20,11 +20,13 @@ app = FastAPI()
 app_config = load_config()
 
 
+# set up db session
 def get_db_session() -> Generator:
-    engine = create_engine(app_config.SQLALCHEMY_DATABASE_URI, echo=False)
-    db = sessionmaker(bind=engine)()
-
     try:
+        db = SessionLocal()
+        # Test DB
+        print("about to test session")
+        db.execute("SELECT 1")
         yield db
     finally:
         db.close()

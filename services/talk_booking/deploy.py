@@ -40,7 +40,9 @@ def run_migrations(client, cluster, task_arn):
 
 def update_service(client, cluster, service, task_arn):
     response = client.update_service(
-        cluster=cluster, service=service, taskDefinition=task_arn,
+        cluster=cluster,
+        service=service,
+        taskDefinition=task_arn,
     )
     print(response)
 
@@ -109,7 +111,10 @@ if __name__ == "__main__":
     run_migrations(ecs_client, cluster_name, new_task_arn)
 
     update_service(
-        ecs_client, cluster=cluster_name, service=service_name, task_arn=new_task_arn,
+        ecs_client,
+        cluster=cluster_name,
+        service=service_name,
+        task_arn=new_task_arn,
     )
     finished = wait_to_finish_deployment(
         ecs_client,

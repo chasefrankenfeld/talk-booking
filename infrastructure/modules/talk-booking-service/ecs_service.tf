@@ -7,12 +7,12 @@ resource "aws_ecs_task_definition" "app" {
       "image": "${aws_ecr_repository.talk-booking.repository_url}:latest",
       "cpu": 1000,
       "command": [
-        "uvicorn",
-        "--host",
-        "0.0.0.0",
-        "--port",
-        "${var.container_port}",
+        "gunicorn",
+        "--bind",
+        "0.0.0.0:${var.container_port}",
         "web_app.main:app",
+        "-k",
+        "uvicorn.workers.UvicornWorker"
       ],
       "memory": 950,
       "essential": true,
