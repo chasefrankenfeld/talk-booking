@@ -1,12 +1,12 @@
-import pathlib
+# import pathlib
 import uuid
 from typing import Generator
 
 from fastapi import Depends, FastAPI, Response
-from sqlalchemy import create_engine
+# from sqlalchemy import create_engine
 
-from alembic import config, script
-from alembic.runtime import migration
+# from alembic import config, script
+# from alembic.runtime import migration
 from database import talk_request_db
 from database.session import SessionLocal
 from models import TalkRequest
