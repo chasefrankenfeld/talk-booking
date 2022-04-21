@@ -35,18 +35,18 @@ def get_db_session() -> Generator:
 # health check for aws
 @app.get("/health-check/")
 def health_check(response: Response):
-    engine = create_engine(app_config.SQLALCHEMY_DATABASE_URI)
-    alembic_cfg = config.Config()
-    alembic_cfg.set_main_option(
-        "script_location",
-        str(pathlib.Path(__file__).parent.parent.absolute() / "alembic"),
-    )
-    db_script = script.ScriptDirectory.from_config(alembic_cfg)
-    with engine.begin() as conn:
-        context = migration.MigrationContext.configure(conn)
-        if context.get_current_revision() != db_script.get_current_head():
-            response.status_code = 400
-            return {"message": "Upgrade the database."}
+    # engine = create_engine(app_config.SQLALCHEMY_DATABASE_URI)
+    # alembic_cfg = config.Config()
+    # alembic_cfg.set_main_option(
+    #     "script_location",
+    #     str(pathlib.Path(__file__).parent.parent.absolute() / "alembic"),
+    # )
+    # db_script = script.ScriptDirectory.from_config(alembic_cfg)
+    # with engine.begin() as conn:
+    #     context = migration.MigrationContext.configure(conn)
+    #     if context.get_current_revision() != db_script.get_current_head():
+    #         response.status_code = 400
+    #         return {"message": "Upgrade the database."}
 
     return {"message": "OK"}
 
