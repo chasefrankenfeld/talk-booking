@@ -2,6 +2,7 @@ import pathlib
 
 from alembic import command
 from alembic.config import Config
+
 from .config import load_config
 
 BASE_PATH = pathlib.Path(__file__).parent.parent.absolute()
