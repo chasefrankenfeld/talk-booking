@@ -33,7 +33,7 @@ def run_migrations(client, cluster, task_arn):
             "containerOverrides": [
                 {
                     "name": "talk-booking-app",
-                    "command": "python ./web_app/migrations.py".split(),
+                    "command": "python web_app/migrations.py".split(),
                 }
             ],
         },
