@@ -14,7 +14,7 @@ resource "aws_ecs_task_definition" "app" {
       "environment": [
         {"name": "APP_ENVIRONMENT", "value": "${var.app_environment}"},
         {"name": "AWS_DEFAULT_REGION", "value": "${var.region}"}
-        {"name": "PORT", "value": "${var.container_port}"}
+        {"name": "PORT", "value": ${var.container_port}}
       ],
       "portMappings": [
         {
