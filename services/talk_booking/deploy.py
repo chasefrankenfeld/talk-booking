@@ -31,7 +31,10 @@ def run_migrations(client, cluster, task_arn):
         taskDefinition=task_arn,
         overrides={
             "containerOverrides": [
-                {"name": "talk-booking-app", "command": "python ./web_app/migrations.py".split()}
+                {
+                    "name": "talk-booking-app",
+                    "command": "python ./web_app/migrations.py".split(),
+                }
             ],
         },
     )
