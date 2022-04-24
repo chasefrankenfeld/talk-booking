@@ -8,7 +8,7 @@ resource "aws_ecs_task_definition" "app" {
       "cpu": 1000,
       "command": [
         "./run.sh"
-      ]
+      ],
       "memory": 950,
       "essential": true,
       "environment": [
