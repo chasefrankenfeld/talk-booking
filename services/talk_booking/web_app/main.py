@@ -3,6 +3,7 @@ import uuid
 from typing import Generator
 
 from fastapi import Depends, FastAPI, Response
+from sqlalchemy import create_engine
 
 from alembic import config, script
 from alembic.runtime import migration
@@ -13,9 +14,6 @@ from models import TalkRequest
 from .config import load_config
 from .requests import AcceptTalkRequest, RejectTalkRequest, SubmitTalkRequest
 from .responses import TalkRequestDetails, TalkRequestList
-
-from sqlalchemy import create_engine
-
 
 # fast api app
 app = FastAPI()
