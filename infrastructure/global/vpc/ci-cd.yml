@@ -75,4 +75,4 @@ vpc-destroy:
   when: manual
   only:
     refs:
-      - master
+      - main

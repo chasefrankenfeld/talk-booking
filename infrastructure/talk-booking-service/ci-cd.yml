@@ -141,7 +141,7 @@ talk-booking-service-destroy-development:
   when: manual
   only:
     refs:
-      - master
+      - main
 
 # DESTROY PRODUCTION
 talk-booking-service-destroy-production:
@@ -159,4 +159,4 @@ talk-booking-service-destroy-production:
   when: manual
   only:
     refs:
-      - master
+      - main
