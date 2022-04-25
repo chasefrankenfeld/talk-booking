@@ -2,11 +2,9 @@ import pathlib
 
 from alembic import command
 from alembic.config import Config
-
-from .config import load_config
+from web_app.config import load_config
 
 BASE_PATH = pathlib.Path(__file__).parent.parent.absolute()
-app_config = load_config()
 
 
 def load_alembic_config(dsn):
@@ -28,4 +26,5 @@ def downgrade_migrations(dsn: str):
 
 
 if __name__ == "__main__":
+    app_config = load_config()
     upgrade_migrations(app_config.SQLALCHEMY_DATABASE_URI)
