@@ -1,11 +1,11 @@
-# import pathlib
+import pathlib
 import uuid
 from typing import Generator
 
 from fastapi import Depends, FastAPI, Response
 
-# from alembic import config, script
-# from alembic.runtime import migration
+from alembic import config, script
+from alembic.runtime import migration
 from database import talk_request_db
 from database.session import SessionLocal
 from models import TalkRequest
@@ -14,7 +14,7 @@ from .config import load_config
 from .requests import AcceptTalkRequest, RejectTalkRequest, SubmitTalkRequest
 from .responses import TalkRequestDetails, TalkRequestList
 
-# from sqlalchemy import create_engine
+from sqlalchemy import create_engine
 
 
 # fast api app
@@ -26,9 +26,6 @@ app_config = load_config()
 def get_db_session() -> Generator:
     try:
         db = SessionLocal()
-        # Test DB
-        print("about to test session")
-        db.execute("SELECT 1")
         yield db
     finally:
         db.close()
@@ -37,18 +34,18 @@ def get_db_session() -> Generator:
 # health check for aws
 @app.get("/health-check/")
 def health_check(response: Response):
-    # engine = create_engine(app_config.SQLALCHEMY_DATABASE_URI)
-    # alembic_cfg = config.Config()
-    # alembic_cfg.set_main_option(
-    #     "script_location",
-    #     str(pathlib.Path(__file__).parent.parent.absolute() / "alembic"),
-    # )
-    # db_script = script.ScriptDirectory.from_config(alembic_cfg)
-    # with engine.begin() as conn:
-    #     context = migration.MigrationContext.configure(conn)
-    #     if context.get_current_revision() != db_script.get_current_head():
-    #         response.status_code = 400
-    #         return {"message": "Upgrade the database."}
+    engine = create_engine(app_config.SQLALCHEMY_DATABASE_URI)
+    alembic_cfg = config.Config()
+    alembic_cfg.set_main_option(
+        "script_location",
+        str(pathlib.Path(__file__).parent.parent.absolute() / "alembic"),
+    )
+    db_script = script.ScriptDirectory.from_config(alembic_cfg)
+    with engine.begin() as conn:
+        context = migration.MigrationContext.configure(conn)
+        if context.get_current_revision() != db_script.get_current_head():
+            response.status_code = 400
+            return {"message": "Upgrade the database."}
 
     return {"message": "OK"}
 

@@ -7,14 +7,18 @@ resource "aws_ecs_task_definition" "app" {
       "image": "${aws_ecr_repository.talk-booking.repository_url}:latest",
       "cpu": 1000,
       "command": [
-        "./run.sh"
+        "gunicorn",
+        "--bind",
+        "0.0.0.0:${var.container_port}",
+        "web_app.main:app",
+        "-k",
+        "uvicorn.workers.UvicornWorker"
       ],
       "memory": 950,
       "essential": true,
       "environment": [
         {"name": "APP_ENVIRONMENT", "value": "${var.app_environment}"},
         {"name": "AWS_DEFAULT_REGION", "value": "${var.region}"},
-        {"name": "PORT", "value": "${var.container_port}"}
       ],
       "portMappings": [
         {

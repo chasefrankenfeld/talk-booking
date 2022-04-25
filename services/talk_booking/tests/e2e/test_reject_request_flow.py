@@ -2,7 +2,7 @@ import requests
 
 
 def test_reject_request_flow():
-    api_url = "https://development.your-domain.com"
+    api_url = "https://development.beerlibrary.co"
     talk_request = request_talk(api_url)
     find_talk_request_in_list(api_url, talk_request)
     talk_request = reject_talk_request(api_url, talk_request)
