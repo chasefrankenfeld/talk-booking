@@ -6,7 +6,7 @@ resource "aws_db_subnet_group" "main" {
 resource "random_password" "db_password" {
   length           = 35
   special          = true
-  override_special = "!#$%&*()-_=+[]{}<>:?"
+  override_special = "!#$&*()-_=+[]{}<>:?"
 }
 
 resource "aws_security_group" "rds" {
