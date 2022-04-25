@@ -13,7 +13,7 @@ lib-auto-reject-talk-quality:
   only:
     refs:
       - merge_requests
-      - master
+      - main
     changes:
       - libraries/auto_reject_talk/**/*
 
@@ -32,7 +32,7 @@ lib-auto-reject-talk-tests:
   only:
     refs:
       - merge_requests
-      - master
+      - main
     changes:
       - libraries/auto_reject_talk/**/*
 
