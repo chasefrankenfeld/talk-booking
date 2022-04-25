@@ -17,7 +17,6 @@ from .responses import TalkRequestDetails, TalkRequestList
 # from sqlalchemy import create_engine
 
 
-
 # fast api app
 app = FastAPI()
 app_config = load_config()
