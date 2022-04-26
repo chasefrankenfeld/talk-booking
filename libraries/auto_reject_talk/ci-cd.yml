@@ -48,9 +48,9 @@ lib-auto-reject-talk-publish:
     - poetry build
     - poetry config repositories.talk_booking $REPO_URL
     - poetry publish --repository talk_booking --username gitlab-ci-token --password $CI_JOB_TOKEN
-  only:
-    changes:
-      - libraries/auto_reject_talk/**/*
-    refs:
-      - /^auto-reject-talk-[0-9]+(?:.[0-9]+)+$/
-      - /^auto-reject-talk-rc[0-9]+(?:.[0-9]+)+$/
+  # only:
+  #   changes:
+  #     - libraries/auto_reject_talk/**/*
+  #   refs:
+  #     - /^auto-reject-talk-[0-9]+(?:.[0-9]+)+$/
+  #     - /^auto-reject-talk-rc[0-9]+(?:.[0-9]+)+$/
