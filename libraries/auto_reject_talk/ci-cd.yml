@@ -1,6 +1,6 @@
 lib-auto-reject-talk-quality:
   stage: test
-  image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-python3.8-slim
+  image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-python3.9-slim
   before_script:
     - cd libraries/auto_reject_talk/
     - poetry install
@@ -19,7 +19,7 @@ lib-auto-reject-talk-quality:
 
 lib-auto-reject-talk-tests:
   stage: test
-  image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-python3.8-slim
+  image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-python3.9-slim
   before_script:
     - cd libraries/auto_reject_talk/
     - poetry install
@@ -38,7 +38,7 @@ lib-auto-reject-talk-tests:
 
 lib-auto-reject-talk-publish:
   stage: deploy
-  image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-python3.8-slim
+  image: registry.gitlab.com/chasefrankenfeld/talk-booking:cicd-python3.9-slim
   variables:
     REPO_URL: https://gitlab.com/api/v4/projects/35320676/packages/pypi
   before_script:
