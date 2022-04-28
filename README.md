@@ -18,10 +18,11 @@ Set up a Gitlab Repo (note: if you want to use Github, you can setup a Gitlab re
 ## Things that need to change
 
 1. talk-booking throughout the infrastructure
-2. the domains in infrastructure/talk-booking-service/\*/main -> development and production
+2. The domains in infrastructure/talk-booking-service/\*/main -> development and production
 3. gitlab.com/chasefrankenfeld --> to your username
 4. gitlab project ID in the terraform remote state of infrastructure and "lib-auto-reject-talk-publish" REPO_URL
 5. Add AWS_ACCESS_KEY_ID, AWS_DEFAULT_REGION, AWS_SECRET_ACCESS_KEY and CODECOV_TOKEN to Gitlab Settings CI/CD Variables
+6. On running the infrastructure pipeline --> ou'll need to edit your domain's nameservers to point to the Route 53 Hosted Zone. You can do this from your domain registrar. To get the nameservers, open the [AWS Route 53 console](https://console.aws.amazon.com/route53/v2/hostedzones#), select your Hosted Zone, expand Hosted zone details, and copy the nameservers to your domain's DNS server settings.
 
 ## Local
 
